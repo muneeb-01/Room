@@ -9,7 +9,7 @@ import Loader from "@/components/Loader";
 
 const Meeting = ({ params: { id } }: { params: { id: string } }) => {
   const { user, isLoaded } = useUser();
-  const [isSetupCompleted, setSsSetupCompleted] = useState(false);
+  const [isSetupCompleted, setIsSetupCompleted] = useState(false);
   const { call, isCallLoading } = useGetCallbyId(id);
 
   if (!isLoaded || isCallLoading) return <Loader />;
@@ -18,7 +18,11 @@ const Meeting = ({ params: { id } }: { params: { id: string } }) => {
     <main className="h-screen w-full">
       <StreamCall call={call}>
         <StreamTheme>
-          {!isSetupCompleted ? <MeetingSetup /> : <MeetingRoom />}
+          {!isSetupCompleted ? (
+            <MeetingSetup setIsSetupCompleted={setIsSetupCompleted} />
+          ) : (
+            <MeetingRoom />
+          )}
         </StreamTheme>
       </StreamCall>
     </main>
