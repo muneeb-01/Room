@@ -99,15 +99,30 @@ const MeetingType = () => {
         handleClick={() => setMeeting("isJoiningMeeting")}
         color="bg-yellow-1"
       />
-      <MeetingModel
-        isOpen={meeting === "isInstantMeeting"}
-        onClose={() => setMeeting(undefined)}
-        title="Start An Instant Meeting"
-        className="text-center"
-        buttonText="Start Meeting"
-        handleClick={() => createMeeting()}
-        image=""
-      />
+
+      {!callDetails ? (
+        <MeetingModel
+          isOpen={meeting === "isScheduledMeeting"}
+          onClose={() => setMeeting(undefined)}
+          title="Create Meeting"
+          handleClick={() => createMeeting()}
+          image=""
+        />
+      ) : (
+        <MeetingModel
+          isOpen={meeting === "isScheduledMeeting"}
+          onClose={() => setMeeting(undefined)}
+          title="Meeting Created"
+          className="text-center"
+          buttonText="Copy Meeting Link"
+          handleClick={() => {
+            // navigator.clipboard.writeText(MeetingLink);
+            // toast({ title: "Link Copied" });
+          }}
+          image="/icons/checked.svg"
+          buttonIcon="/icons/copy.svg"
+        />
+      )}
     </section>
   );
 };
